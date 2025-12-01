@@ -1,3 +1,5 @@
+package day01
+
 class Day01 {
     fun part1(input: List<Pair<Char, Int>>): Int {
         var current = 50
