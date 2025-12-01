@@ -1,8 +1,8 @@
 package day01
 
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.Assertions.assertEquals
 import java.io.File
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
 class Day01Test {
     private fun readInput(fileName: String): List<Pair<Char, Int>> {
