@@ -30,7 +30,7 @@ class Day01Test {
     fun testPart2WithTestData() {
         val input = readInput("Day01_test01.txt")
         val result = Day01().part2(input)
-        assertEquals(1, result)
+        assertEquals(6, result)
     }
 
     @Test
