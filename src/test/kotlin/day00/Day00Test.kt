@@ -1,6 +1,5 @@
 package day00
 
-import Day00
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import java.io.File
