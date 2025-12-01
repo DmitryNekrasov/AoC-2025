@@ -20,11 +20,10 @@ class Day01 {
         var result = 0
         for ((direction, num) in input) {
             if (direction == 'L') {
-                if (current == 0) {
-                    result--
-                }
-                if (current - num <= 0) {
-                    result += 1 + (current - num) / -100
+                result += when {
+                    current == 0 -> num / 100
+                    current <= num -> 1 + (num - current) / 100
+                    else -> 0
                 }
                 current = (current - num).mod(100)
             } else {
