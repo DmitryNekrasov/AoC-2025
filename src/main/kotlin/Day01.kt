@@ -16,6 +16,22 @@ class Day01 {
     }
 
     fun part2(input: List<Pair<Char, Int>>): Int {
-        return input.size
+        var current = 50
+        var result = 0
+        for ((direction, num) in input) {
+            if (direction == 'L') {
+                if (current == 0) {
+                    result--
+                }
+                if (current - num <= 0) {
+                    result += 1 + (current - num) / -100
+                }
+                current = (current - num).mod(100)
+            } else {
+                result += (current + num) / 100
+                current = (current + num).mod(100)
+            }
+        }
+        return result
     }
 }
