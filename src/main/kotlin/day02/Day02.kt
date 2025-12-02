@@ -47,7 +47,39 @@ class Day02 {
         return result
     }
 
+    fun String.base(n: Int): Pair<Long, Int> {
+        val reminder = length % n
+        if (reminder != 0) return "1${"0".repeat(length + n - reminder - 1)}".base(n)
+        require(length % n == 0) { "Invalid length: $length in String: $this" }
+        val list = (0..<length step n).map { substring(it, it + n).toLong() }
+        return (if (list.first() == list.max()) list.first() else list.first() + 1) to list.size
+    }
+
+    fun Long.base(n: Int): Pair<Long, Int> = toString().base(n)
+
     fun part2(input: List<Pair<Long, Long>>): Long {
-        return input.size * 10L
+        val used = HashSet<Long>()
+        var result = 0L
+        for ((start, end) in input) {
+            for (i in 1..<start.toString().length) {
+                val startStr = start.toString()
+                val endStr = end.toString()
+                val startTimes = startStr.length / i + (if (startStr.length % i == 0) 0 else 1)
+                val endTimes = endStr.length / i + (if (endStr.length % i == 0) 0 else 1)
+                for (times in startTimes..endTimes) {
+                    var base = "1${"0".repeat(i - 1)}".toLong()
+                    do {
+                        val current = base.toString().repeat(times).toLong()
+                        base++
+                        if (current < start) continue
+                        if (current > end) break
+                        if (current in used) continue
+                        used += current
+                        result += current
+                    } while (true)
+                }
+            }
+        }
+        return result
     }
 }
