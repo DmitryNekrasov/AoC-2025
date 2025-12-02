@@ -3,14 +3,14 @@ package day02
 class Day02 {
 
     fun part1(input: List<Pair<Long, Long>>): Long {
-        fun Long.base(): Long = toString().base()
-
         fun String.base(): Long {
             if (length % 2 == 1) return "1${"0".repeat(length)}".base()
             val left = take(length / 2).toLong()
             val right = drop(length / 2).toLong()
             return if (left < right) left + 1 else left
         }
+
+        fun Long.base(): Long = toString().base()
 
         fun Long.multiplier(): Long {
             var x = this
