@@ -10,8 +10,6 @@ class Day02 {
             return if (left < right) left + 1 else left
         }
 
-        fun Long.base(): Long = toString().base()
-
         fun Long.multiplier(): Long {
             var x = this
             var result = 1L
