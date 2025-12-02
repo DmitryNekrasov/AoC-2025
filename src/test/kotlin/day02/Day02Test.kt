@@ -12,7 +12,7 @@ class Day02Test {
     }
 
 
-    private fun readInput(fileName: String): List<Pair<Long, Long>> {
+    private fun readInput(fileName: String): List<Pair<String, String>> {
         return File("src/test/kotlin/day$DAY/$fileName")
             .readLines()
             .first()
@@ -20,7 +20,6 @@ class Day02Test {
             .map { interval ->
                 interval
                     .split("-")
-                    .map(String::toLong)
                     .let { (start, end) -> start to end }
             }
     }

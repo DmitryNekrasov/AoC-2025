@@ -2,7 +2,7 @@ package day02
 
 class Day02 {
 
-    fun part1(input: List<Pair<Long, Long>>): Long {
+    fun part1(input: List<Pair<String, String>>): Long {
         fun String.base(): Long {
             if (length % 2 == 1) return "1${"0".repeat(length)}".base()
             val left = take(length / 2).toLong()
@@ -40,14 +40,14 @@ class Day02 {
             result += secondPart * multiplierEnd + secondPart
 
             val lastNum = baseEnd * multiplierEnd + baseEnd
-            if (lastNum > end) {
+            if (lastNum > end.toLong()) {
                 result -= lastNum
             }
         }
         return result
     }
 
-    fun part2(input: List<Pair<Long, Long>>): Long {
+    fun part2(input: List<Pair<String, String>>): Long {
         return input.size * 10L
     }
 }
