@@ -46,6 +46,26 @@ class Day02 {
     }
 
     fun part2(input: List<Pair<String, String>>): Long {
-        return input.size * 10L
+        var result = 0L
+        for ((start, end) in input) {
+            val used = HashSet<Long>()
+            for (partLen in 1..(end.length / 2)) {
+                val startTimes = start.length / partLen + if (start.length % partLen == 0) 0 else 1
+                val endTimes = end.length / partLen + if (end.length % partLen == 0) 0 else 1
+                for (times in maxOf(startTimes, 2)..endTimes) {
+                    var base = "1${"0".repeat(partLen - 1)}".toLong()
+                    do {
+                        val current = base.toString().repeat(times).toLong()
+                        base++
+                        if (current < start.toLong()) continue
+                        if (current > end.toLong()) break
+                        if (current in used) continue
+                        used += current
+                        result += current
+                    } while (true)
+                }
+            }
+        }
+        return result
     }
 }
