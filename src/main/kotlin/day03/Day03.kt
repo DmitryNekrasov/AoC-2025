@@ -1,5 +1,7 @@
 package day03
 
+import kodvent.math.pow
+
 class Day03 {
 
     fun String.indexOfMaxInRange(range: IntRange): Int {
@@ -25,6 +27,14 @@ class Day03 {
     }
 
     fun part2(input: List<String>): Long {
-        return input.size * 10L
+        var result = 0L
+        for (line in input) {
+            var currentIndex = -1
+            for (k in 11 downTo 0) {
+                currentIndex = line.indexOfMaxInRange((currentIndex + 1)..(line.lastIndex - k))
+                result += line[currentIndex].asDigit() * 10L.pow(k.toLong())
+            }
+        }
+        return result
     }
 }
