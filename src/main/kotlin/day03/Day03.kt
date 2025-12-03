@@ -24,7 +24,7 @@ class Day03 {
         return result
     }
 
-    fun part2(input: List<String>): Int {
-        return input.size * 10
+    fun part2(input: List<String>): Long {
+        return input.size * 10L
     }
 }
