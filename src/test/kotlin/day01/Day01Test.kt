@@ -6,7 +6,7 @@ import kotlin.test.assertEquals
 
 class Day01Test {
 
-    companion object Companion {
+    companion object {
         const val DAY = "01"
         val solution = Day01()
     }
