@@ -33,8 +33,8 @@ class Day04 {
         val n = grid.size
         val m = grid.first().size
         var result = 0
-        var wasRemoved = true
-        while (wasRemoved) {
+        var wasRemoved: Boolean
+        do {
             wasRemoved = false
             for (i in 0..<n) {
                 for (j in 0..<m) {
@@ -47,7 +47,7 @@ class Day04 {
                     }
                 }
             }
-        }
+        } while (wasRemoved)
         return result
     }
 }
