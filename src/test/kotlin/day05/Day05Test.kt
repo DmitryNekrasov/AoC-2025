@@ -12,36 +12,50 @@ class Day05Test {
     }
 
 
-    private fun readInput(fileName: String): List<String> {
-        return File("src/test/kotlin/day$DAY/$fileName")
-            .readLines()
+    private fun readInput(fileName: String): Pair<List<LongRange>, List<Long>> {
+        val lines = File("src/test/kotlin/day$DAY/$fileName").readLines()
+        val ranges = mutableListOf<LongRange>()
+        val nums = mutableListOf<Long>()
+        var beforeLineBreak = true
+        for (line in lines) {
+            if (line.isEmpty()) {
+                beforeLineBreak = false
+                continue
+            }
+            when {
+                line.isEmpty() -> beforeLineBreak = false
+                beforeLineBreak -> line.split("-").map(String::toLong).also { (start, end) -> ranges.add(start..end) }
+                else -> nums.add(line.toLong())
+            }
+        }
+        return ranges to nums
     }
 
     @Test
     fun testPart1WithTestData() {
-        val input = readInput("Day${DAY}_test01.txt")
-        val result = solution.part1(input)
+        val (ranges, nums) = readInput("Day${DAY}_test01.txt")
+        val result = solution.part1(ranges, nums)
         assertEquals(1, result)
     }
 
     @Test
     fun testPart1WithFullData() {
-        val input = readInput("Day${DAY}.txt")
-        val result = solution.part1(input)
+        val (ranges, nums) = readInput("Day${DAY}.txt")
+        val result = solution.part1(ranges, nums)
         println("result = $result")
     }
 
     @Test
     fun testPart2WithTestData() {
-        val input = readInput("Day${DAY}_test01.txt")
-        val result = solution.part2(input)
+        val (ranges, nums) = readInput("Day${DAY}_test01.txt")
+        val result = solution.part2(ranges, nums)
         assertEquals(10, result)
     }
 
     @Test
     fun testPart2WithFullData() {
-        val input = readInput("Day${DAY}.txt")
-        val result = solution.part2(input)
+        val (ranges, nums) = readInput("Day${DAY}.txt")
+        val result = solution.part2(ranges, nums)
         println("result = $result")
     }
 }

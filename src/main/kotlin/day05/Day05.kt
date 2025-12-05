@@ -1,11 +1,11 @@
 package day05
 
 class Day05 {
-    fun part1(input: List<String>): Int {
-        return input.size
+    fun part1(ranges: List<LongRange>, nums: List<Long>): Int {
+        return ranges.size
     }
 
-    fun part2(input: List<String>): Int {
-        return input.size * 10
+    fun part2(ranges: List<LongRange>, nums: List<Long>): Int {
+        return ranges.size * 10
     }
 }
