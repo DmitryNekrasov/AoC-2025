@@ -1,14 +1,14 @@
-package day00
+package day06
 
 import java.io.File
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class Day00Test {
+class Day06Test {
 
     companion object {
-        const val DAY = "00"
-        val solution = Day00()
+        const val DAY = "06"
+        val solution = Day06()
     }
 
     private fun readInput(fileName: String): List<String> {
