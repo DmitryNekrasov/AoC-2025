@@ -11,7 +11,6 @@ class Day05Test {
         val solution = Day05()
     }
 
-
     private fun readInput(fileName: String): Pair<List<LongRange>, List<Long>> {
         val lines = File("src/test/kotlin/day$DAY/$fileName").readLines()
         val ranges = mutableListOf<LongRange>()
