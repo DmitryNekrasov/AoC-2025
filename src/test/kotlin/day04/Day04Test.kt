@@ -11,7 +11,6 @@ class Day04Test {
         val solution = Day04()
     }
 
-
     private fun readInput(fileName: String): List<CharArray> {
         return File("src/test/kotlin/day$DAY/$fileName")
             .readLines().map { it.toCharArray() }

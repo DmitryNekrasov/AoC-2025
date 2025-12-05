@@ -11,7 +11,6 @@ class Day02Test {
         val solution = Day02()
     }
 
-
     private fun readInput(fileName: String): List<Pair<String, String>> {
         return File("src/test/kotlin/day$DAY/$fileName")
             .readLines()
