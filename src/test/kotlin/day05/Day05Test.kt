@@ -49,7 +49,7 @@ class Day05Test {
     fun testPart2WithTestData() {
         val (ranges, nums) = readInput("Day${DAY}_test01.txt")
         val result = solution.part2(ranges, nums)
-        assertEquals(10, result)
+        assertEquals(14L, result)
     }
 
     @Test
