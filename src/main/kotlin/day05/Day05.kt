@@ -4,7 +4,7 @@ class Day05 {
     fun part1(ranges: List<LongRange>, nums: List<Long>): Int =
         nums.count { num -> ranges.any { range -> num in range } }
 
-    fun part2(ranges: List<LongRange>, nums: List<Long>): Long {
+    fun part2(ranges: List<LongRange>): Long {
         return ranges.size * 10L
     }
 }

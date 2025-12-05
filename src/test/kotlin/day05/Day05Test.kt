@@ -46,15 +46,15 @@ class Day05Test {
 
     @Test
     fun testPart2WithTestData() {
-        val (ranges, nums) = readInput("Day${DAY}_test01.txt")
-        val result = solution.part2(ranges, nums)
+        val (ranges, _) = readInput("Day${DAY}_test01.txt")
+        val result = solution.part2(ranges)
         assertEquals(14L, result)
     }
 
     @Test
     fun testPart2WithFullData() {
-        val (ranges, nums) = readInput("Day${DAY}.txt")
-        val result = solution.part2(ranges, nums)
+        val (ranges, _) = readInput("Day${DAY}.txt")
+        val result = solution.part2(ranges)
         println("result = $result")
     }
 }
