@@ -30,17 +30,26 @@ class Day06 {
         return result.dropLast(1)
     }
 
-    fun part2(input: List<String>): Long {
-        input.joinToString("\n").also(::println)
-        val operations = input.last()
-
-        val ranges = operations.ranges().also { println(it) }
-        for (line in input) {
-            for (range in ranges) {
-                println("[${line.substring(range)}]")
-            }
-        }
+    fun solve(nums: List<String>, operation: Char): Long {
+        println(nums)
+        println(operation)
 
         return 1L
+    }
+
+    fun part2(input: List<String>): Long {
+        input.joinToString("\n").also(::println)
+        val numLines = input.dropLast(1)
+        val operations = input.last()
+        val ranges = operations.ranges().also { println(it) }
+        var result = 0L
+        for (range in ranges) {
+            val numStrings = mutableListOf<String>()
+            for (line in numLines) {
+                numStrings += line.substring(range)
+            }
+            result += solve(numStrings, operations[range.first])
+        }
+        return result
     }
 }
