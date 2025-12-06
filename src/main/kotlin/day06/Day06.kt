@@ -16,7 +16,8 @@ class Day06 {
         return result
     }
 
-    fun part2(nums: List<List<Long>>, operations: List<Char>): Long {
+    fun part2(input: List<String>): Long {
+        input.joinToString("\n").also(::println)
         return 1L
     }
 }
