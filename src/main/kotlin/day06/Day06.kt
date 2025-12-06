@@ -16,8 +16,31 @@ class Day06 {
         return result
     }
 
+    fun String.ranges(): List<IntRange> {
+        val result = mutableListOf<IntRange>()
+        var start = 0
+        while (start < length) {
+            var i = start + 1
+            while (i < length && this[i] == ' ') {
+                i++
+            }
+            result += start..(i - 2)
+            start = i
+        }
+        return result.dropLast(1)
+    }
+
     fun part2(input: List<String>): Long {
         input.joinToString("\n").also(::println)
+        val operations = input.last()
+
+        val ranges = operations.ranges().also { println(it) }
+        for (line in input) {
+            for (range in ranges) {
+                println("[${line.substring(range)}]")
+            }
+        }
+
         return 1L
     }
 }
