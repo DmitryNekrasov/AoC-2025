@@ -30,25 +30,41 @@ class Day06 {
         return result.dropLast(1)
     }
 
-    fun solve(nums: List<String>, operation: Char): Long {
-        println(nums)
-        println(operation)
-
-        return 1L
+    fun solve(numsString: List<String>, operation: Char): Long {
+        val numLen = numsString.first().length
+        val nums = mutableListOf<Long>()
+        for (i in (numLen - 1) downTo 0) {
+            var current = 0L
+            val d = 10
+            for (num in numsString) {
+                if (num[i].isDigit()) {
+                    current *= d
+                    current += num[i].digitToInt()
+                }
+            }
+            nums += current
+        }
+        var result = if (operation == '+') 0L else 1L
+        for (num in nums) {
+            when (operation) {
+                '+' -> result += num
+                else -> result *= num
+            }
+        }
+        return result
     }
 
     fun part2(input: List<String>): Long {
-        input.joinToString("\n").also(::println)
         val numLines = input.dropLast(1)
-        val operations = input.last()
-        val ranges = operations.ranges().also { println(it) }
+        val operationsLine = input.last()
+        val ranges = operationsLine.ranges()
         var result = 0L
         for (range in ranges) {
             val numStrings = mutableListOf<String>()
             for (line in numLines) {
                 numStrings += line.substring(range)
             }
-            result += solve(numStrings, operations[range.first])
+            result += solve(numStrings, operationsLine[range.first])
         }
         return result
     }
