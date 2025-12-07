@@ -34,7 +34,7 @@ class Day07Test {
     fun testPart2WithTestData() {
         val grid = readInput("Day${DAY}_test01.txt")
         val result = solution.part2(grid)
-        assertEquals(10, result)
+        assertEquals(40L, result)
     }
 
     @Test

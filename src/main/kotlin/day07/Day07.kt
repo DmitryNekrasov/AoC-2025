@@ -21,7 +21,7 @@ class Day07 {
         return result
     }
 
-    fun part2(input: List<CharArray>): Int {
-        return 1
+    fun part2(input: List<CharArray>): Long {
+        return 1L
     }
 }
