@@ -27,13 +27,11 @@ class Day08 {
         val sortedEdges = getSortedEdges(points)
         val dsu = DisjointSetUnion(points.size)
         repeat(connectionNumber) { dsu.union(sortedEdges[it].first, sortedEdges[it].second) }
-
         val count = HashMap<Int, Int>()
         for (i in points.indices) {
             val root = dsu.find(i)
             count.increment(root)
         }
-
         return count.values.sortedDescending().take(3).reduce(Int::times)
     }
 
@@ -41,7 +39,7 @@ class Day08 {
         val sortedEdges = getSortedEdges(points)
         val dsu = DisjointSetUnion(points.size)
         var edgeNumber = 0
-        for ((from, to, distance) in sortedEdges) {
+        for ((from, to, _) in sortedEdges) {
             if (dsu.union(from, to)) {
                 edgeNumber++
             }
