@@ -29,8 +29,7 @@ class Day08 {
         repeat(connectionNumber) { dsu.union(sortedEdges[it].first, sortedEdges[it].second) }
         val count = HashMap<Int, Int>()
         for (i in points.indices) {
-            val root = dsu.find(i)
-            count.increment(root)
+            count.increment(dsu.find(i))
         }
         return count.values.sortedDescending().take(3).reduce(Int::times)
     }
