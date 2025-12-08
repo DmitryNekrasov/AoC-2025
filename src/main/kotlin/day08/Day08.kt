@@ -7,6 +7,7 @@ class Day08 {
     class Enumerator<T> {
         private val cache = mutableMapOf<T, Int>()
         operator fun get(x: T) = cache.getOrPut(x) { cache.size }
+        fun getByNum(num: Int): T = cache.entries.first { it.value == num }.key
     }
 
     val Long.sqr: Long get() = this * this
@@ -14,9 +15,8 @@ class Day08 {
     fun distance(x1: Long, x2: Long, y1: Long, y2: Long, z1: Long, z2: Long): Long =
         (x2 - x1).sqr + (y2 - y1).sqr + (z2 - z1).sqr
 
-    fun getSortedEdges(points: List<List<Long>>): List<Triple<Int, Int, Long>> {
+    fun getSortedEdges(points: List<List<Long>>, enumerator: Enumerator<List<Long>> = Enumerator()): List<Triple<Int, Int, Long>> {
         val edges = mutableListOf<Triple<Int, Int, Long>>()
-        val enumerator = Enumerator<List<Long>>()
         val n = points.size
         for (i in 0..<(n - 1)) {
             val (x1, y1, z1) = points[i]
@@ -47,6 +47,18 @@ class Day08 {
     }
 
     fun part2(points: List<List<Long>>): Long {
-        return 1L
+        val enumerator = Enumerator<List<Long>>()
+        val sortedEdges = getSortedEdges(points, enumerator)
+        val dsu = DisjointSetUnion(points.size)
+        var edgeNumber = 0
+        for ((from, to, distance) in sortedEdges) {
+            if (dsu.union(from, to)) {
+                edgeNumber++
+            }
+            if (edgeNumber == points.size - 1) {
+                return enumerator.getByNum(from).first() * enumerator.getByNum(to).first()
+            }
+        }
+        error("Should not reach here")
     }
 }
