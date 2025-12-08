@@ -14,7 +14,7 @@ class Day08 {
     fun distance(x1: Long, x2: Long, y1: Long, y2: Long, z1: Long, z2: Long): Long =
         (x2 - x1).sqr + (y2 - y1).sqr + (z2 - z1).sqr
 
-    fun part1(points: List<List<Long>>, connectionNumber: Int): Int {
+    fun getSortedEdges(points: List<List<Long>>): List<Triple<Int, Int, Long>> {
         val edges = mutableListOf<Triple<Int, Int, Long>>()
         val enumerator = Enumerator<List<Long>>()
         val n = points.size
@@ -28,13 +28,16 @@ class Day08 {
                 edges += Triple(from, to, distance)
             }
         }
+        return edges.sortedBy { it.third }
+    }
 
-        val sortedEdges = edges.sortedBy { it.third }
-        val dsu = DisjointSetUnion(n)
+    fun part1(points: List<List<Long>>, connectionNumber: Int): Int {
+        val sortedEdges = getSortedEdges(points)
+        val dsu = DisjointSetUnion(points.size)
         repeat(connectionNumber) { dsu.union(sortedEdges[it].first, sortedEdges[it].second) }
 
         val count = HashMap<Int, Int>()
-        for (i in 0..<n) {
+        for (i in points.indices) {
             val root = dsu.find(i)
             count.increment(root)
         }
