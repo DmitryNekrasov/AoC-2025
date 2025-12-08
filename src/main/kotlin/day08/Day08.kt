@@ -4,11 +4,6 @@ import kodvent.datastructures.DisjointSetUnion
 import kodvent.increment
 
 class Day08 {
-    class Enumerator<T> {
-        private val cache = mutableMapOf<T, Int>()
-        operator fun get(x: T) = cache.getOrPut(x) { cache.size }
-    }
-
     val Long.sqr: Long get() = this * this
 
     fun distance(x1: Long, x2: Long, y1: Long, y2: Long, z1: Long, z2: Long): Long =
@@ -16,16 +11,13 @@ class Day08 {
 
     fun getSortedEdges(points: List<List<Long>>): List<Triple<Int, Int, Long>> {
         val edges = mutableListOf<Triple<Int, Int, Long>>()
-        val enumerator = Enumerator<List<Long>>()
         val n = points.size
         for (i in 0..<(n - 1)) {
             val (x1, y1, z1) = points[i]
-            val from = enumerator[points[i]]
             for (j in (i + 1)..<n) {
                 val (x2, y2, z2) = points[j]
-                val to = enumerator[points[j]]
                 val distance = distance(x1, x2, y1, y2, z1, z2)
-                edges += Triple(from, to, distance)
+                edges += Triple(i, j, distance)
             }
         }
         return edges.sortedBy { it.third }
