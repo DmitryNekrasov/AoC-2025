@@ -7,7 +7,6 @@ class Day08 {
     class Enumerator<T> {
         private val cache = mutableMapOf<T, Int>()
         operator fun get(x: T) = cache.getOrPut(x) { cache.size }
-        fun getByNum(num: Int): T = cache.entries.first { it.value == num }.key
     }
 
     val Long.sqr: Long get() = this * this
@@ -56,7 +55,7 @@ class Day08 {
                 edgeNumber++
             }
             if (edgeNumber == points.size - 1) {
-                return enumerator.getByNum(from).first() * enumerator.getByNum(to).first()
+                return points[from][0] * points[to][0]
             }
         }
         error("Should not reach here")
