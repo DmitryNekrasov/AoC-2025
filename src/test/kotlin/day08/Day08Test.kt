@@ -11,36 +11,36 @@ class Day08Test {
         val solution = Day08()
     }
 
-    private fun readInput(fileName: String): List<String> {
+    private fun readInput(fileName: String): List<List<Long>> {
         return File("src/test/kotlin/day$DAY/$fileName")
-            .readLines()
+            .readLines().map { it.split(",").map(String::toLong) }
     }
 
     @Test
     fun testPart1WithTestData() {
-        val input = readInput("Day${DAY}_test01.txt")
-        val result = solution.part1(input)
-        assertEquals(1, result)
+        val points = readInput("Day${DAY}_test01.txt")
+        val result = solution.part1(points)
+        assertEquals(40L, result)
     }
 
     @Test
     fun testPart1WithFullData() {
-        val input = readInput("Day${DAY}.txt")
-        val result = solution.part1(input)
+        val points = readInput("Day${DAY}.txt")
+        val result = solution.part1(points)
         println("result = $result")
     }
 
     @Test
     fun testPart2WithTestData() {
-        val input = readInput("Day${DAY}_test01.txt")
-        val result = solution.part2(input)
+        val points = readInput("Day${DAY}_test01.txt")
+        val result = solution.part2(points)
         assertEquals(10, result)
     }
 
     @Test
     fun testPart2WithFullData() {
-        val input = readInput("Day${DAY}.txt")
-        val result = solution.part2(input)
+        val points = readInput("Day${DAY}.txt")
+        val result = solution.part2(points)
         println("result = $result")
     }
 }
