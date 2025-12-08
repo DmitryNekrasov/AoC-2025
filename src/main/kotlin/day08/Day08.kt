@@ -34,8 +34,7 @@ class Day08 {
             count.increment(root)
         }
 
-        val (a, b, c) = count.values.sortedDescending().take(3)
-        return a * b * c
+        return count.values.sortedDescending().take(3).reduce(Int::times)
     }
 
     fun part2(points: List<List<Long>>): Long {
