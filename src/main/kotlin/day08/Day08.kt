@@ -34,10 +34,9 @@ class Day08 {
     }
 
     fun part2(points: List<List<Long>>): Long {
-        val sortedEdges = getSortedEdges(points)
         val dsu = DisjointSetUnion(points.size)
         var edgeNumber = 0
-        for ((from, to, _) in sortedEdges) {
+        for ((from, to, _) in getSortedEdges(points)) {
             if (dsu.union(from, to)) {
                 edgeNumber++
             }
