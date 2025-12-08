@@ -16,8 +16,7 @@ class Day08 {
             val (x1, y1, z1) = points[i]
             for (j in (i + 1)..<n) {
                 val (x2, y2, z2) = points[j]
-                val distance = distance(x1, x2, y1, y2, z1, z2)
-                edges += Triple(i, j, distance)
+                edges += Triple(i, j, distance(x1, x2, y1, y2, z1, z2))
             }
         }
         return edges.sortedBy { it.third }
