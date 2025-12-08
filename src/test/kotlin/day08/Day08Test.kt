@@ -19,14 +19,14 @@ class Day08Test {
     @Test
     fun testPart1WithTestData() {
         val points = readInput("Day${DAY}_test01.txt")
-        val result = solution.part1(points)
-        assertEquals(40L, result)
+        val result = solution.part1(points, 10)
+        assertEquals(40, result)
     }
 
     @Test
     fun testPart1WithFullData() {
         val points = readInput("Day${DAY}.txt")
-        val result = solution.part1(points)
+        val result = solution.part1(points, 1000)
         println("result = $result")
     }
 
