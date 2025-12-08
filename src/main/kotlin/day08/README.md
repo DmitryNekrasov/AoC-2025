@@ -27,8 +27,6 @@ Using a Disjoint Set Union (DSU) data structure allows us to efficiently track w
     - When the (n-1)th successful union occurs, all junction boxes form a single circuit
     - Return the product of X coordinates from the endpoints of this final connecting edge
 
-The `Enumerator` class provides a clean mapping from coordinate tuples to integer indices for the DSU structure.
-
 ## Complexity
 
 - Time complexity:
