@@ -22,6 +22,22 @@ class Day09 {
         override fun toString(): String = "($x,$y)"
     }
 
+    data class Segment(val p1: Point, val p2: Point)
+
+    fun Segment.intersectsWith(other: Segment): Boolean = when {
+        p1.y == p2.y && other.p1.x == other.p2.x -> {
+            other.p1.x in 1 + minOf(p1.x, p2.x)..<maxOf(p1.x, p2.x) &&
+                    p1.y in 1 + minOf(other.p1.y, other.p2.y)..<maxOf(other.p1.y, other.p2.y)
+        }
+
+        p1.x == p2.x && other.p1.y == other.p2.y -> {
+            p1.x in 1 + minOf(other.p1.x, other.p2.x)..<maxOf(other.p1.x, other.p2.x) &&
+                    other.p1.y in 1 + minOf(p1.y, p2.y)..<maxOf(p1.y, p2.y)
+        }
+
+        else -> false
+    }
+
     fun Point.isInside(polygon: List<Point>): Boolean {
         var intersections = 0
         for (i in polygon.indices) {
