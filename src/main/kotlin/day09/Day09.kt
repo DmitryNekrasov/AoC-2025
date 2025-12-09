@@ -22,6 +22,28 @@ class Day09 {
         override fun toString(): String = "($x,$y)"
     }
 
+    fun Point.isInside(polygon: List<Point>): Boolean {
+        var intersections = 0
+        for (i in polygon.indices) {
+            val p1 = polygon[i]
+            val p2 = polygon[(i + 1) % polygon.size]
+            if (this.isOnSegment(p1, p2)) return true
+            if (p1.x == p2.x && (p1.y > y) != (p2.y > y) && x < p1.x) {
+                intersections++
+            }
+        }
+        return intersections % 2 == 1
+    }
+
+    fun Point.isOnSegment(p1: Point, p2: Point): Boolean {
+        val (x1, y1) = p1
+        val (x2, y2) = p2
+        return if (x1 == x2)
+            y in minOf(y1, y2)..maxOf(y1, y2)
+        else
+            x in minOf(x1, x2)..maxOf(x1, x2)
+    }
+
     fun part2(points: List<Pair<Long, Long>>): Long {
         val polygon = points.map { (x, y) -> Point(x, y) }
 
