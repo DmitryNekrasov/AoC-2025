@@ -1,6 +1,7 @@
 package day09
 
 import kotlin.math.absoluteValue
+import kotlin.random.Random
 
 class Day09 {
     fun part1(points: List<Pair<Long, Long>>): Long {
@@ -22,22 +23,6 @@ class Day09 {
         override fun toString(): String = "($x,$y)"
     }
 
-    data class Segment(val p1: Point, val p2: Point)
-
-    fun Segment.intersectsWith(other: Segment): Boolean = when {
-        p1.y == p2.y && other.p1.x == other.p2.x -> {
-            other.p1.x in 1 + minOf(p1.x, p2.x)..<maxOf(p1.x, p2.x) &&
-                    p1.y in 1 + minOf(other.p1.y, other.p2.y)..<maxOf(other.p1.y, other.p2.y)
-        }
-
-        p1.x == p2.x && other.p1.y == other.p2.y -> {
-            p1.x in 1 + minOf(other.p1.x, other.p2.x)..<maxOf(other.p1.x, other.p2.x) &&
-                    other.p1.y in 1 + minOf(p1.y, p2.y)..<maxOf(p1.y, p2.y)
-        }
-
-        else -> false
-    }
-
     fun Point.isInside(polygon: List<Point>): Boolean {
         var intersections = 0
         for (i in polygon.indices) {
@@ -55,16 +40,41 @@ class Day09 {
         val (x1, y1) = p1
         val (x2, y2) = p2
         return if (x1 == x2)
-            y in minOf(y1, y2)..maxOf(y1, y2)
+            x == x1 && y in minOf(y1, y2)..maxOf(y1, y2)
         else
-            x in minOf(x1, x2)..maxOf(x1, x2)
+            y == y1 && x in minOf(x1, x2)..maxOf(x1, x2)
     }
 
     fun part2(points: List<Pair<Long, Long>>): Long {
         val polygon = points.map { (x, y) -> Point(x, y) }
+        var result = 0L
+        for (i in 0..<(polygon.lastIndex - 1)) {
+            val p1 = polygon[i]
+            for (j in (i + 1)..<polygon.lastIndex) {
+                val p2 = polygon[j]
+                if (testRectangleInPolygon(p1, p2, polygon, 10000)) {
+                    val width = (p1.x - p2.x).absoluteValue + 1
+                    val height = (p1.y - p2.y).absoluteValue + 1
+                    result = maxOf(result, width * height)
+                }
+            }
+        }
+        return result
+    }
 
-        println(polygon)
+    fun testRectangleInPolygon(p1: Point, p2: Point, polygon: List<Point>, times: Int): Boolean {
+        repeat(times) {
+            if (!generateRandomPointInRectangle(p1, p2).isInside(polygon)) return false
+        }
+        return true
+    }
 
-        return 1L
+    fun generateRandomPointInRectangle(p1: Point, p2: Point): Point = Point(
+        random.nextLong(minOf(p1.x, p2.x), maxOf(p1.x, p2.x) + 1),
+        random.nextLong(minOf(p1.y, p2.y), maxOf(p1.y, p2.y) + 1)
+    )
+
+    companion object {
+        val random = Random(0xcafebabe)
     }
 }
