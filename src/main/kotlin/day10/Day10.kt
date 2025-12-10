@@ -44,6 +44,14 @@ class Day10 {
     }
 
     fun part2(input: List<Data>): Int {
+        for ((_, buttons, joltage) in input) {
+            val mat = Array(joltage.size) { IntArray(buttons.size) }
+            for ((buttonIndex, button) in buttons.withIndex()) {
+                for (index in button) {
+                    mat[index][buttonIndex] = 1
+                }
+            }
+        }
         return 1
     }
 }
