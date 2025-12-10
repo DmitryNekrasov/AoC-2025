@@ -3,7 +3,8 @@ package day10
 import java.util.LinkedList
 import java.util.Queue
 
-data class Data(val lightDiagram: String, val buttons: List<List<Int>>, val joltage: List<Int>)
+@OptIn(ExperimentalUnsignedTypes::class)
+data class Data(val lightDiagram: String, val buttons: List<List<Int>>, val joltage: UByteArray)
 
 class Day10 {
     fun part1(input: List<Data>): Int {
@@ -39,6 +40,22 @@ class Day10 {
         }
 
         return input.sumOf { (lightDiagram, buttons, _) -> bfs(lightDiagram.compress(), buttons.compress()) }
+    }
+
+    @OptIn(ExperimentalUnsignedTypes::class)
+    class Vertex(val bytes: UByteArray) {
+        override fun equals(other: Any?): Boolean {
+            if (this === other) return true
+            if (javaClass != other?.javaClass) return false
+
+            other as Vertex
+
+            return bytes.contentEquals(other.bytes)
+        }
+
+        override fun hashCode(): Int {
+            return bytes.contentHashCode()
+        }
     }
 
     fun part2(input: List<Data>): Int {
