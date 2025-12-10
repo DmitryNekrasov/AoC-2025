@@ -3,7 +3,7 @@ package day10
 import java.util.LinkedList
 import java.util.Queue
 
-private fun String.toIntMask(): Int {
+private fun String.compress(): Int {
     var result = 0
     for ((i, c) in this.withIndex()) {
         if (c == '#') {
@@ -13,11 +13,11 @@ private fun String.toIntMask(): Int {
     return result
 }
 
-private fun List<List<Int>>.toIntMask(): List<Int> = map { it.fold(0) { acc, num -> acc or (1 shl num) } }
+private fun List<List<Int>>.compress(): List<Int> = map { it.fold(0) { acc, num -> acc or (1 shl num) } }
 
 data class Data(val lightDiagram: String, val buttons: List<List<Int>>, val joltage: List<Int>) {
     override fun toString(): String =
-        "[$lightDiagram: ${lightDiagram.toIntMask().toString(2).padStart(16, '0')}]" + buttons.toIntMask()
+        "[$lightDiagram: ${lightDiagram.compress().toString(2).padStart(16, '0')}]" + buttons.compress()
 }
 
 fun bfs(target: Int, transitions: List<Int>): Int {
@@ -41,7 +41,7 @@ fun bfs(target: Int, transitions: List<Int>): Int {
 
 class Day10 {
     fun part1(input: List<Data>): Int {
-        return input.sumOf { (lightDiagram, buttons, _) -> bfs(lightDiagram.toIntMask(), buttons.toIntMask()) }
+        return input.sumOf { (lightDiagram, buttons, _) -> bfs(lightDiagram.compress(), buttons.compress()) }
     }
 
     fun part2(input: List<Data>): Int {
