@@ -10,8 +10,11 @@ private fun String.toIntMask(): Int {
     return result
 }
 
+private fun List<List<Int>>.toIntMask(): List<Int> = map { it.fold(0) { acc, num -> acc or (1 shl num) } }
+
 data class Data(val lightDiagram: String, val buttons: List<List<Int>>, val joltage: List<Int>) {
-    override fun toString(): String = "[$lightDiagram: ${lightDiagram.toIntMask().toString(2).padStart(16, '0')}]"
+    override fun toString(): String =
+        "[$lightDiagram: ${lightDiagram.toIntMask().toString(2).padStart(16, '0')}]" + buttons.toIntMask()
 }
 
 class Day10 {
