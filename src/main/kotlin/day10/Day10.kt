@@ -55,29 +55,40 @@ class Day10 {
         }
     }
 
-    fun solve(buttons: List<List<Int>>, target: UByteArray): Int {
-        val cache = hashMapOf<Triple<Int, Int, Int>, Int>()
+    fun UByteArray.toKey(): Pair<Long, Short> {
+        var low = 0L
+        for (i in 0..<minOf(8, size)) {
+            low = (low shl 8) or this[i].toLong()
+        }
+        var high = 0
+        for (i in 0..<maxOf(0, size - 8)) {
+            high = (high shl 8) or this[i + 8].toInt()
+        }
+        return low to high.toShort()
+    }
 
-        fun backtrack(buttonIndex: Int, current: UByteArray, totalPushNumber: Int): Int {
-            if (current.all { it.toInt() == 0 }) return totalPushNumber
+    fun solve(buttons: List<List<Int>>, target: UByteArray): Int {
+        val cache = hashMapOf<Triple<Int, Long, Short>, Int>()
+
+        fun backtrack(buttonIndex: Int, current: UByteArray): Int {
+            if (current.all { it.toInt() == 0 }) return 0
             if (buttonIndex == buttons.size) return INF
 
-            val key = Triple(buttonIndex, current.contentHashCode(), totalPushNumber)
-            if (key in cache) return cache[key]!!
+            val (low, high) = current.toKey()
+
+            val key = Triple(buttonIndex, low, high)
+            cache[key]?.let { return it }
 
             val button = buttons[buttonIndex]
-
-            var minCount = UByte.MAX_VALUE
-            for (index in button) {
-                if (current[index] < minCount) {
-                    minCount = current[index]
-                }
-            }
+            val minCount = button.minOf { current[it] }.toInt()
 
             var result = INF
-            for (count in 0..minCount.toInt()) {
+            for (count in 0..minCount) {
                 current.push(button, count.toUByte())
-                result = minOf(result, backtrack(buttonIndex + 1, current, totalPushNumber + count))
+                val sub = backtrack(buttonIndex + 1, current)
+                if (sub != INF) {
+                    result = minOf(result, sub + count)
+                }
                 current.pull(button, count.toUByte())
             }
 
@@ -85,7 +96,7 @@ class Day10 {
             return result
         }
 
-        return backtrack(0, target, 0)
+        return backtrack(0, target)
     }
 
     fun part2(input: List<Data>): Int {
