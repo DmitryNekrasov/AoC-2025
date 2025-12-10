@@ -43,49 +43,56 @@ class Day10 {
         return input.sumOf { (lightDiagram, buttons, _) -> bfs(lightDiagram.compress(), buttons.compress()) }
     }
 
-    class Vertex(val bytes: UByteArray) {
-        override fun equals(other: Any?): Boolean {
-            if (this === other) return true
-            if (javaClass != other?.javaClass) return false
-
-            other as Vertex
-
-            return bytes.contentEquals(other.bytes)
-        }
-
-        override fun hashCode(): Int {
-            return bytes.contentHashCode()
+    fun UByteArray.push(button: List<Int>, times: UByte) {
+        for (index in button) {
+            this[index] = (this[index] - times).toUByte()
         }
     }
 
-    operator fun Vertex.plus(transition: List<Int>): Vertex {
-        val newBytes = bytes.copyOf()
-        for (index in transition) {
-            newBytes[index]++
+    fun UByteArray.pull(button: List<Int>, times: UByte) {
+        for (index in button) {
+            this[index] = (this[index] + times).toUByte()
         }
-        return Vertex(newBytes)
     }
 
-    fun bfs(target: Vertex, transitions: List<List<Int>>): Int {
-        val start = Vertex(UByteArray(target.bytes.size) { 0u })
-        val queue: Queue<Pair<Vertex, Int>> = LinkedList()
-        queue.add(start to 0)
-        val visited = hashSetOf(start)
-        while (queue.isNotEmpty()) {
-            val (from, distance) = queue.poll()
-            if (from == target) return distance
-            for (transition in transitions) {
-                val to = from + transition
-                if (to !in visited) {
-                    visited.add(to)
-                    queue.add(to to distance + 1)
+    fun solve(buttons: List<List<Int>>, target: UByteArray): Int {
+        val cache = hashMapOf<Triple<Int, Int, Int>, Int>()
+
+        fun backtrack(buttonIndex: Int, current: UByteArray, totalPushNumber: Int): Int {
+            if (current.all { it.toInt() == 0 }) return totalPushNumber
+            if (buttonIndex == buttons.size) return INF
+
+            val key = Triple(buttonIndex, current.contentHashCode(), totalPushNumber)
+            if (key in cache) return cache[key]!!
+
+            val button = buttons[buttonIndex]
+
+            var minCount = UByte.MAX_VALUE
+            for (index in button) {
+                if (current[index] < minCount) {
+                    minCount = current[index]
                 }
             }
+
+            var result = INF
+            for (count in 0..minCount.toInt()) {
+                current.push(button, count.toUByte())
+                result = minOf(result, backtrack(buttonIndex + 1, current, totalPushNumber + count))
+                current.pull(button, count.toUByte())
+            }
+
+            cache[key] = result
+            return result
         }
-        error("Should not reach here")
+
+        return backtrack(0, target, 0)
     }
 
     fun part2(input: List<Data>): Int {
-        return input.sumOf { (_, transitions, joltage) -> bfs(Vertex(joltage), transitions) }
+        return input.sumOf { (_, buttons, joltage) -> solve(buttons, joltage) }
+    }
+
+    companion object {
+        const val INF = 1_000_000_000
     }
 }
