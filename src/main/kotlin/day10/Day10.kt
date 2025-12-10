@@ -15,10 +15,7 @@ private fun String.compress(): Int {
 
 private fun List<List<Int>>.compress(): List<Int> = map { it.fold(0) { acc, num -> acc or (1 shl num) } }
 
-data class Data(val lightDiagram: String, val buttons: List<List<Int>>, val joltage: List<Int>) {
-    override fun toString(): String =
-        "[$lightDiagram: ${lightDiagram.compress().toString(2).padStart(16, '0')}]" + buttons.compress()
-}
+data class Data(val lightDiagram: String, val buttons: List<List<Int>>, val joltage: List<Int>)
 
 fun bfs(target: Int, transitions: List<Int>): Int {
     val start = 0
