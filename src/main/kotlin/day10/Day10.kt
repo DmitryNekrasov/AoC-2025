@@ -3,12 +3,9 @@ package day10
 import kodvent.math.gcd
 import java.util.LinkedList
 import java.util.Queue
-import kotlin.math.abs
 
-@OptIn(ExperimentalUnsignedTypes::class)
 data class Data(val lightDiagram: String, val buttons: List<List<Int>>, val joltage: List<Int>)
 
-@OptIn(ExperimentalUnsignedTypes::class)
 class Day10 {
     fun part1(input: List<Data>): Int {
         fun String.compress(): Int {
