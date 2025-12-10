@@ -17,8 +17,8 @@ class Day10Test {
         map { it.substring(1, it.lastIndex).split(",").map(String::toInt) }
 
     @OptIn(ExperimentalUnsignedTypes::class)
-    private fun String.toJoltage(): UByteArray =
-        substring(1, lastIndex).split(",").map(String::toUByte).toUByteArray()
+    private fun String.toJoltage(): List<Int> =
+        substring(1, lastIndex).split(",").map(String::toInt)
 
     private fun readInput(fileName: String): List<Data> {
         return File("src/test/kotlin/day$DAY/$fileName")
