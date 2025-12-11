@@ -14,27 +14,55 @@ class Day11 {
         return dfs(you)
     }
 
-    fun part2(graph: List<List<Int>>, svr: Int, out: Int, dac: Int, fft: Int): Int {
-        fun dfs(from: Int, state: Int): Int {
-            if (from == out) return if ((state and DAC) != 0 && (state and FFT) != 0) 1 else 0
-            var count = 0
+    fun part2(graph: List<List<Int>>, svr: Int, out: Int, dac: Int, fft: Int): Long {
+        graph.withIndex().joinToString("\n") { (index, list) -> "$index: ${list.toList().toString()}" }.also(::println)
+        println("svr: $svr, out: $out, dac: $dac, fft: $fft")
+
+        val visited = BooleanArray(graph.size) { false }
+        val reversedTopSortOrder = mutableListOf<Int>()
+
+        fun dfs(from: Int) {
+            visited[from] = true
             for (to in graph[from]) {
-                count += dfs(
-                    to, when (to) {
-                        dac -> state or DAC
-                        fft -> state or FFT
-                        else -> state
-                    }
-                )
+                if (!visited[to]) {
+                    dfs(to)
+                }
             }
-            return count
+            reversedTopSortOrder.add(from)
         }
 
-        return dfs(svr, 0)
+        dfs(svr)
+        val topSortOrder = reversedTopSortOrder.reversed()
+        val dp = Array(4) { LongArray(graph.size) { 0L } }
+        dp[TOTAL][svr] = 1L
+        for (v in topSortOrder) {
+            for (u in graph[v]) {
+                dp[TOTAL][u] += dp[TOTAL][v]
+                if (v != dac && v != fft) {
+                    dp[DAC][u] += dp[DAC][v]
+                    dp[FFT][u] += dp[FFT][v]
+                    dp[BOTH][u] += dp[BOTH][v]
+                } else {
+                    if (v == dac) {
+                        dp[DAC][u] += dp[TOTAL][v]
+                        dp[BOTH][u] += dp[FFT][v]
+                    } else {
+                        dp[FFT][u] += dp[TOTAL][v]
+                        dp[BOTH][u] += dp[DAC][v]
+                    }
+                }
+            }
+        }
+
+        dp.joinToString("\n") { it.toList().toString() }.also(::println)
+
+        return dp[BOTH][out]
     }
 
     companion object {
-        const val DAC = 0b01
-        const val FFT = 0b10
+        const val TOTAL = 0
+        const val DAC = 1
+        const val FFT = 2
+        const val BOTH = 3
     }
 }

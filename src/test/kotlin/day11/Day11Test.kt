@@ -48,7 +48,7 @@ class Day11Test {
     fun testPart2WithTestData() {
         val (graph, enumerator) = readInput("Day${DAY}_test02.txt")
         val result = solution.part2(graph, enumerator["svr"], enumerator["out"], enumerator["dac"], enumerator["fft"])
-        assertEquals(2, result)
+        assertEquals(2L, result)
     }
 
     @Test
