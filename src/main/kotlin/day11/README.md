@@ -1,5 +1,7 @@
 # Day 11: Reactor
 
+![graph+dp](img.jpeg)
+
 ## Intuition
 
 The problem models a network of devices as a directed acyclic graph where we need to count paths. Part 1 asks for all paths from `you` to `out`, while Part 2 requires counting only those paths from `svr` to `out` that traverse both `dac` and `fft` nodes.
