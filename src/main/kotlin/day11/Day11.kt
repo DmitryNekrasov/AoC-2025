@@ -15,9 +15,6 @@ class Day11 {
     }
 
     fun part2(graph: List<List<Int>>, svr: Int, out: Int, dac: Int, fft: Int): Long {
-        graph.withIndex().joinToString("\n") { (index, list) -> "$index: ${list.toList().toString()}" }.also(::println)
-        println("svr: $svr, out: $out, dac: $dac, fft: $fft")
-
         val visited = BooleanArray(graph.size) { false }
         val reversedTopSortOrder = mutableListOf<Int>()
 
@@ -32,29 +29,30 @@ class Day11 {
         }
 
         dfs(svr)
-        val topSortOrder = reversedTopSortOrder.reversed()
         val dp = Array(4) { LongArray(graph.size) { 0L } }
         dp[TOTAL][svr] = 1L
-        for (v in topSortOrder) {
-            for (u in graph[v]) {
-                dp[TOTAL][u] += dp[TOTAL][v]
-                if (v != dac && v != fft) {
-                    dp[DAC][u] += dp[DAC][v]
-                    dp[FFT][u] += dp[FFT][v]
-                    dp[BOTH][u] += dp[BOTH][v]
-                } else {
-                    if (v == dac) {
-                        dp[DAC][u] += dp[TOTAL][v]
-                        dp[BOTH][u] += dp[FFT][v]
-                    } else {
-                        dp[FFT][u] += dp[TOTAL][v]
-                        dp[BOTH][u] += dp[DAC][v]
+        for (from in reversedTopSortOrder.reversed()) {
+            for (to in graph[from]) {
+                dp[TOTAL][to] += dp[TOTAL][from]
+                when (from) {
+                    dac -> {
+                        dp[DAC][to] += dp[TOTAL][from]
+                        dp[BOTH][to] += dp[FFT][from]
+                    }
+
+                    fft -> {
+                        dp[FFT][to] += dp[TOTAL][from]
+                        dp[BOTH][to] += dp[DAC][from]
+                    }
+
+                    else -> {
+                        dp[DAC][to] += dp[DAC][from]
+                        dp[FFT][to] += dp[FFT][from]
+                        dp[BOTH][to] += dp[BOTH][from]
                     }
                 }
             }
         }
-
-        dp.joinToString("\n") { it.toList().toString() }.also(::println)
 
         return dp[BOTH][out]
     }
