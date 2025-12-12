@@ -14,7 +14,28 @@ fun Shape.rotate(): Shape {
     return Shape(rotatedGrid)
 }
 
-data class Region(val n: Int, val m: Int, val quantities: List<Int>)
+fun Array<CharArray>.canPlace(rowIndex: Int, colIndex: Int, shape: Shape): Boolean {
+    for (i in rowIndex..<(rowIndex + shape.grid.size)) {
+        for (j in colIndex..<(colIndex + shape.grid.first().size)) {
+            if (shape.grid[i - rowIndex][j - colIndex] == '#' && this[i][j] == '#') return false
+        }
+    }
+    return true
+}
+
+fun Array<CharArray>.place(rowIndex: Int, colIndex: Int, shape: Shape) {
+    for (i in rowIndex..<(rowIndex + shape.grid.size)) {
+        for (j in colIndex..<(colIndex + shape.grid.first().size)) {
+            if (shape.grid[i - rowIndex][j - colIndex] == '#') {
+                this[i][j] = '#'
+            }
+        }
+    }
+}
+
+data class Region(val n: Int, val m: Int, val quantities: List<Int>) {
+    val grid = Array(n) { CharArray(m) { '.' } }
+}
 
 fun Region.canFit(shapes: List<Shape>): Boolean {
     return false
