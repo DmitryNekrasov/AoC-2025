@@ -1,4 +1,4 @@
-# Advent of Code 2025: Fewer Days, Deeper Math 🧮
+# 🎄 Advent of Code 2025: Fewer Days, Deeper Math 🧮
 
 ![complete](complete.png)
 
