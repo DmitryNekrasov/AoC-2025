@@ -11,36 +11,50 @@ class Day12Test {
         val solution = Day12()
     }
 
-    private fun readInput(fileName: String): List<String> {
-        return File("src/test/kotlin/day$DAY/$fileName")
-            .readLines()
+    private fun readInput(fileName: String): Pair<List<Shape>, List<Region>> {
+        val lines = File("src/test/kotlin/day$DAY/$fileName").readLines()
+        val shapes = mutableListOf<Shape>()
+        for (i in 1..26 step 5) {
+            val grid = mutableListOf<String>()
+            for (j in i..<(i + 3)) {
+                grid += lines[j]
+            }
+            shapes += Shape(grid)
+        }
+        val regions = (30..lines.lastIndex).map { i ->
+            lines[i].split(": ").let { (sizeStr, quantitiesStr) ->
+                val (n, m) = sizeStr.split("x").map(String::toInt)
+                Region(n, m, quantitiesStr.split(" ").map(String::toInt))
+            }
+        }
+        return shapes to regions
     }
 
     @Test
     fun testPart1WithTestData() {
-        val input = readInput("Day${DAY}_test01.txt")
-        val result = solution.part1(input)
-        assertEquals(1, result)
+        val (shapes, regions) = readInput("Day${DAY}_test01.txt")
+        val result = solution.part1(shapes, regions)
+        assertEquals(2, result)
     }
 
     @Test
     fun testPart1WithFullData() {
-        val input = readInput("Day${DAY}.txt")
-        val result = solution.part1(input)
+        val (shapes, regions) = readInput("Day${DAY}.txt")
+        val result = solution.part1(shapes, regions)
         println("result = $result")
     }
 
     @Test
     fun testPart2WithTestData() {
-        val input = readInput("Day${DAY}_test01.txt")
-        val result = solution.part2(input)
+        val (shapes, regions) = readInput("Day${DAY}_test01.txt")
+        val result = solution.part2(shapes, regions)
         assertEquals(10, result)
     }
 
     @Test
     fun testPart2WithFullData() {
-        val input = readInput("Day${DAY}.txt")
-        val result = solution.part2(input)
+        val (shapes, regions) = readInput("Day${DAY}.txt")
+        val result = solution.part2(shapes, regions)
         println("result = $result")
     }
 }
