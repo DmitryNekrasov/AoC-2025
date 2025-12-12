@@ -2,8 +2,6 @@ package day12
 
 data class Shape(val grid: List<CharArray>) {
     val size = grid.sumOf { line ->  line.count { it == '#'} }
-
-    override fun toString(): String = grid.joinToString("\n") { String(it) }
 }
 
 fun Shape.rotate(): Shape {
