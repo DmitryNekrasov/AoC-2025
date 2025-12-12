@@ -19,7 +19,7 @@ class Day12Test {
             for (j in i..<(i + 3)) {
                 grid += lines[j].toCharArray()
             }
-            shapes += Shape(grid)
+            shapes += grid
         }
         val regions = (30..lines.lastIndex).map { i ->
             lines[i].split(": ").let { (sizeStr, quantitiesStr) ->

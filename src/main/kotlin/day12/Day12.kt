@@ -1,23 +1,23 @@
 package day12
 
-class Shape(val grid: List<CharArray>) {
-    val size = grid.sumOf { line -> line.count { it == '#' } }
-}
+typealias Shape = List<CharArray>
+
+val Shape.area: Int get() = sumOf { line -> line.count { it == '#' } }
 
 fun Shape.rotate(): Shape {
-    val rotatedGrid = List(grid.first().size) { CharArray(grid.size) { '.' } }
-    for (i in 0..<grid.size) {
-        for (j in 0..<grid.first().size) {
-            rotatedGrid[j][grid.size - i - 1] = grid[i][j]
+    val rotatedGrid = List(first().size) { CharArray(size) { '.' } }
+    for (i in 0..<size) {
+        for (j in 0..<first().size) {
+            rotatedGrid[j][size - i - 1] = this[i][j]
         }
     }
-    return Shape(rotatedGrid)
+    return rotatedGrid
 }
 
 fun Array<CharArray>.canPlace(rowIndex: Int, colIndex: Int, shape: Shape): Boolean {
-    for (i in rowIndex..<(rowIndex + shape.grid.size)) {
-        for (j in colIndex..<(colIndex + shape.grid.first().size)) {
-            if (shape.grid[i - rowIndex][j - colIndex] == '#') {
+    for (i in rowIndex..<(rowIndex + shape.size)) {
+        for (j in colIndex..<(colIndex + shape.first().size)) {
+            if (shape[i - rowIndex][j - colIndex] == '#') {
                 if (this[i][j] == '#') {
                     return false
                 }
@@ -28,9 +28,9 @@ fun Array<CharArray>.canPlace(rowIndex: Int, colIndex: Int, shape: Shape): Boole
 }
 
 fun Array<CharArray>.place(rowIndex: Int, colIndex: Int, shape: Shape, char: Char = '#') {
-    for (i in rowIndex..<(rowIndex + shape.grid.size)) {
-        for (j in colIndex..<(colIndex + shape.grid.first().size)) {
-            if (shape.grid[i - rowIndex][j - colIndex] == '#') {
+    for (i in rowIndex..<(rowIndex + shape.size)) {
+        for (j in colIndex..<(colIndex + shape.first().size)) {
+            if (shape[i - rowIndex][j - colIndex] == '#') {
                 this[i][j] = char
             }
         }
@@ -40,7 +40,7 @@ fun Array<CharArray>.place(rowIndex: Int, colIndex: Int, shape: Shape, char: Cha
 class Region(val n: Int, val m: Int, val quantities: IntArray)
 
 fun Region.canFit(shapes: List<Shape>): Boolean {
-    if (n * m < quantities.withIndex().sumOf { (index, count) -> shapes[index].size * count }) return false
+    if (n * m < quantities.withIndex().sumOf { (index, count) -> shapes[index].area * count }) return false
 
     val grid = Array(n) { CharArray(m) { '.' } }
 
@@ -57,8 +57,8 @@ fun Region.canFit(shapes: List<Shape>): Boolean {
         if (quantities[shapeIndex] == 0) return backtrack(shapeIndex + 1)
         val rotations = rotatedShapes[shapeIndex]
         for (shape in rotations) {
-            for (i in 0..<(n - shape.grid.size + 1)) {
-                for (j in 0..<(m - shape.grid.first().size + 1)) {
+            for (i in 0..<(n - shape.size + 1)) {
+                for (j in 0..<(m - shape.first().size + 1)) {
                     if (grid.canPlace(i, j, shape)) {
                         grid.place(i, j, shape)
                         quantities[shapeIndex]--
