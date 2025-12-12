@@ -31,30 +31,16 @@ class Day12Test {
     }
 
     @Test
-    fun testPart1WithTestData() {
+    fun testWithTestData() {
         val (shapes, regions) = readInput("Day${DAY}_test01.txt")
-        val result = solution.part1(shapes, regions)
+        val result = solution.solve(shapes, regions)
         assertEquals(2, result)
     }
 
     @Test
-    fun testPart1WithFullData() {
+    fun testWithFullData() {
         val (shapes, regions) = readInput("Day${DAY}.txt")
-        val result = solution.part1(shapes, regions)
-        println("result = $result")
-    }
-
-    @Test
-    fun testPart2WithTestData() {
-        val (shapes, regions) = readInput("Day${DAY}_test01.txt")
-        val result = solution.part2(shapes, regions)
-        assertEquals(10, result)
-    }
-
-    @Test
-    fun testPart2WithFullData() {
-        val (shapes, regions) = readInput("Day${DAY}.txt")
-        val result = solution.part2(shapes, regions)
+        val result = solution.solve(shapes, regions)
         println("result = $result")
     }
 }
