@@ -2,7 +2,7 @@
 
 ![complete](complete.png)
 
-I finished Advent of Code again this year. It is my third year in a row. 2023 was about using many languages. 2024 was full of graph problems in Kotlin. This year I focused more on math, careful models, and using my own tools.
+I finished Advent of Code again this year. It is my third year in a row. [2023](https://github.com/DmitryNekrasov/AoC-2023) was about using many languages. [2024](https://github.com/DmitryNekrasov/AoC-2024) was full of graph problems in Kotlin. This year I focused more on math, careful models, and using my own tools.
 
 There were only 12 days, but many puzzles were very hard. It felt like a small course in algorithms, not just a simple puzzle calendar.
 
@@ -36,4 +36,4 @@ During all these days, my own library, kodvent, helped a lot. It has usefull ext
 
 When I compare this year with 2023 and 2024, I see progress. I am less afraid of hard math now. I switch between methods faster. And I trust my own infrastructure more, especially kodvent and my usual patterns.
 
-I did not chase the leaderboard, but I did chase good ideas. Another Advent of Code is done, and I learned many new tricks. Big thanks to Eric @topaz Wastl and the AoC community. See you next year - with Kotlin, kodvent, and maybe even stranger solutions.
+I did not chase the leaderboard, but I did chase good ideas. Another Advent of Code is done, and I learned many new tricks. Big thanks to [Eric Wastl](https://github.com/topaz) and the AoC community. See you next year - with Kotlin, kodvent, and maybe even stranger solutions.
