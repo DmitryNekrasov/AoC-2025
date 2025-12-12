@@ -15,9 +15,9 @@ class Day12Test {
         val lines = File("src/test/kotlin/day$DAY/$fileName").readLines()
         val shapes = mutableListOf<Shape>()
         for (i in 1..26 step 5) {
-            val grid = mutableListOf<String>()
+            val grid = mutableListOf<CharArray>()
             for (j in i..<(i + 3)) {
-                grid += lines[j]
+                grid += lines[j].toCharArray()
             }
             shapes += Shape(grid)
         }

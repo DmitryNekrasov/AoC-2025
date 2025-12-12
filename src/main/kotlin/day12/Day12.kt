@@ -1,7 +1,7 @@
 package day12
 
-data class Shape(val grid: List<String>) {
-    override fun toString(): String = grid.joinToString("\n")
+data class Shape(val grid: List<CharArray>) {
+    override fun toString(): String = grid.joinToString("\n") { String(it) }
 }
 
 data class Region(val n: Int, val m: Int, val quantities: List<Int>)
