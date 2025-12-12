@@ -1,6 +1,6 @@
 package day12
 
-data class Shape(val grid: List<CharArray>) {
+class Shape(val grid: List<CharArray>) {
     val size = grid.sumOf { line -> line.count { it == '#' } }
 }
 
@@ -37,7 +37,7 @@ fun Array<CharArray>.place(rowIndex: Int, colIndex: Int, shape: Shape, char: Cha
     }
 }
 
-data class Region(val n: Int, val m: Int, val quantities: IntArray)
+class Region(val n: Int, val m: Int, val quantities: IntArray)
 
 fun Region.canFit(shapes: List<Shape>): Boolean {
     if (n * m < quantities.withIndex().sumOf { (index, count) -> shapes[index].size * count }) return false
