@@ -1,6 +1,8 @@
 package day12
 
 data class Shape(val grid: List<CharArray>) {
+    val size = grid.sumOf { line ->  line.count { it == '#'} }
+
     override fun toString(): String = grid.joinToString("\n") { String(it) }
 }
 
@@ -40,6 +42,8 @@ fun Array<CharArray>.place(rowIndex: Int, colIndex: Int, shape: Shape, char: Cha
 data class Region(val n: Int, val m: Int, val quantities: IntArray)
 
 fun Region.canFit(shapes: List<Shape>): Boolean {
+    if (n * m < quantities.withIndex().sumOf { (index, count) -> shapes[index].size * count }) return false
+
     val grid = Array(n) { CharArray(m) { '.' } }
 
     val rotatedShapes = shapes.map { shape ->
@@ -74,8 +78,7 @@ fun Region.canFit(shapes: List<Shape>): Boolean {
 }
 
 class Day12 {
-    fun part1(shapes: List<Shape>, regions: List<Region>): Int =
-        regions.count { region -> region.canFit(shapes).also { println("Region: $region, can fit: $it") } }
+    fun part1(shapes: List<Shape>, regions: List<Region>): Int = regions.count { region -> region.canFit(shapes) }
 
     fun part2(shapes: List<Shape>, regions: List<Region>): Int {
         return 1
