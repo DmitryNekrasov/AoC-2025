@@ -24,7 +24,7 @@ class Day12Test {
         val regions = (30..lines.lastIndex).map { i ->
             lines[i].split(": ").let { (sizeStr, quantitiesStr) ->
                 val (n, m) = sizeStr.split("x").map(String::toInt)
-                Region(n, m, quantitiesStr.split(" ").map(String::toInt))
+                Region(n, m, quantitiesStr.split(" ").map(String::toInt).toIntArray())
             }
         }
         return shapes to regions
