@@ -74,7 +74,8 @@ fun Region.canFit(shapes: List<Shape>): Boolean {
 }
 
 class Day12 {
-    fun part1(shapes: List<Shape>, regions: List<Region>): Int = regions.count { it.canFit(shapes) }
+    fun part1(shapes: List<Shape>, regions: List<Region>): Int =
+        regions.count { region -> region.canFit(shapes).also { println("Region: $region, can fit: $it") } }
 
     fun part2(shapes: List<Shape>, regions: List<Region>): Int {
         return 1
