@@ -16,13 +16,12 @@ fun Shape.rotate(): Shape {
 
 data class Region(val n: Int, val m: Int, val quantities: List<Int>)
 
-class Day12 {
-    fun part1(shapes: List<Shape>, regions: List<Region>): Int {
-        shapes.joinToString("\n") { "$it\n" }.also(::println)
-        regions.joinToString("\n").also(::println)
+fun Region.canFit(shapes: List<Shape>): Boolean {
+    return false
+}
 
-        return 0
-    }
+class Day12 {
+    fun part1(shapes: List<Shape>, regions: List<Region>): Int = regions.count { it.canFit(shapes) }
 
     fun part2(shapes: List<Shape>, regions: List<Region>): Int {
         return 1
