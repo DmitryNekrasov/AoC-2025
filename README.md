@@ -1,5 +1,7 @@
 # 🎄 Advent of Code 2025: Fewer Days, Deeper Math 🧮
 
+[![Total: 24](https://img.shields.io/badge/🎄AoC-⭐24-forestgreen?labelColor=darkred)](https://adventofcode.com/)
+
 ![complete](complete.png)
 
 I finished Advent of Code again this year. It is my third year in a row. [2023](https://github.com/DmitryNekrasov/AoC-2023) was about using many languages. [2024](https://github.com/DmitryNekrasov/AoC-2024) was full of graph problems in Kotlin. This year I focused more on math, careful models, and using my own tools.
