@@ -10,7 +10,7 @@ repositories {
 }
 
 dependencies {
-    implementation("io.github.dmitrynekrasov:kodvent:0.1.8")
+    implementation("io.github.dmitrynekrasov:kodvent:0.3.0")
     testImplementation(kotlin("test"))
 }
 

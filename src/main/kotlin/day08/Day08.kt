@@ -1,7 +1,7 @@
 package day08
 
 import kodvent.datastructures.DisjointSetUnion
-import kodvent.increment
+import kodvent.collections.increment
 
 class Day08 {
     val Long.sqr: Long get() = this * this
